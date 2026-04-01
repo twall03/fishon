@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fishon — All Your Water. One App.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#EDE8E0;
+  --dk:#3D3528;
+  --md:#7A7060;
+  --lt:#A09888;
+  --ln:#D5CEC2;
+  --bl:#2E9BCC;
+  --bl-h:#2589B8;
+  --bl-bg:rgba(46,155,204,.08);
+  --gn:#2D6B3F;
+  --gn-bg:rgba(45,107,63,.07);
+  --fd:'Playfair Display',Georgia,serif;
+  --fh:'DM Sans',sans-serif;
+  --fb:'Lora',Georgia,serif;
+}
+html{scroll-behavior:smooth;background:var(--bg)}
+.topo{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg width='900' height='900' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 450q225-90 450 0t450 0' fill='none' stroke='%233D3528' stroke-width='.8'/%3E%3Cpath d='M0 380q225-65 450 25t450-25' fill='none' stroke='%233D3528' stroke-width='.6'/%3E%3Cpath d='M0 520q225-110 450-25t450 25' fill='none' stroke='%233D3528' stroke-width='.6'/%3E%3Cpath d='M0 310q225-40 450 50t450-50' fill='none' stroke='%233D3528' stroke-width='.5'/%3E%3Cpath d='M0 590q225-130 450-50t450 50' fill='none' stroke='%233D3528' stroke-width='.5'/%3E%3Cpath d='M0 240q225-20 450 70t450-70' fill='none' stroke='%233D3528' stroke-width='.4'/%3E%3Cpath d='M0 660q225-150 450-70t450 70' fill='none' stroke='%233D3528' stroke-width='.4'/%3E%3Cpath d='M0 170q225 0 450 90t450-90' fill='none' stroke='%233D3528' stroke-width='.3'/%3E%3Cpath d='M0 730q225-170 450-90t450 90' fill='none' stroke='%233D3528' stroke-width='.3'/%3E%3C/svg%3E");background-size:900px 900px}
+body{font-family:var(--fb);color:var(--dk);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ══ NAV ══ */
+nav,section,.stats,.ms,footer{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:60px;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;background:var(--dk);transition:box-shadow .3s}
+nav.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.nl{display:flex;align-items:center;gap:.5rem;text-decoration:none}
+.nl svg{width:24px;height:24px}
+.nl span{font-family:var(--fh);font-size:.85rem;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase}
+.nr{display:flex;align-items:center;gap:2rem;list-style:none}
+.nr a{font-family:var(--fh);font-weight:500;font-size:.82rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .2s;letter-spacing:.02em}
+.nr a:hover{color:#fff}
+.nr .cta{background:var(--bl);color:#fff;padding:.45rem 1.1rem;border-radius:7px;font-weight:600;transition:all .2s}
+.nr .cta:hover{background:var(--bl-h);box-shadow:0 4px 14px rgba(46,155,204,.3);transform:translateY(-1px)}
+
+/* ══ HERO ══ */
+.hero{position:relative;padding:11rem 2rem 8rem;text-align:left;overflow:hidden;min-height:600px}
+.hero .hero-img{position:absolute;inset:0;z-index:0}
+.hero .hero-img img{width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.hero .hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(30,25,18,.85) 0%,rgba(30,25,18,.6) 40%,rgba(30,25,18,.15) 75%,transparent 100%)}
+.hero::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:60px;background:linear-gradient(to bottom,transparent,var(--bg));pointer-events:none;z-index:1}
+.hero .h-wrap{position:relative;z-index:2;max-width:1040px;margin:0 auto;transform:translateX(-6rem)}
+.h-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .9rem;background:rgba(46,155,204,.1);border:1px solid rgba(46,155,204,.18);border-radius:100px;font-family:var(--fh);font-size:.65rem;font-weight:600;color:var(--bl);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2rem;animation:fu .6s ease forwards;opacity:0}
+.h-tag i{width:5px;height:5px;background:var(--bl);border-radius:50%;animation:bk 2s infinite}
+.hero h1{font-family:var(--fd);font-size:clamp(2.6rem,6.5vw,5rem);font-weight:800;line-height:1.08;color:#fff;letter-spacing:-.02em;margin-bottom:1.1rem;animation:fu .6s ease .08s forwards;opacity:0}
+.hero h1 b{color:var(--bl);font-weight:800}
+.hero p{font-family:var(--fh);font-size:clamp(.92rem,1.6vw,1.12rem);color:rgba(255,255,255,.6);max-width:480px;margin:0 0 2rem;line-height:1.65;animation:fu .6s ease .16s forwards;opacity:0}
+.h-act{display:flex;gap:.75rem;flex-wrap:wrap;animation:fu .6s ease .24s forwards;opacity:0}
+.b{font-family:var(--fh);font-weight:600;font-size:.86rem;padding:.72rem 1.7rem;border-radius:8px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:all .2s}
+.b1{background:var(--bl);color:#fff}
+.b1:hover{background:var(--bl-h);transform:translateY(-2px);box-shadow:0 6px 22px rgba(46,155,204,.3)}
+.b2{background:transparent;color:rgba(255,255,255,.7);border:1.5px solid rgba(255,255,255,.18)}
+.b2:hover{color:#fff;border-color:rgba(255,255,255,.35);transform:translateY(-2px)}
+
+/* ══ STATS ══ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);max-width:780px;margin:-2rem auto 0;position:relative;z-index:2;background:var(--bg);border:1px solid var(--ln);border-radius:13px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.st{padding:1.2rem .8rem;text-align:center;border-right:1px solid var(--ln)}
+.st:last-child{border-right:none}
+.st strong{display:block;font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--bl)}
+.st span{font-family:var(--fh);font-size:.58rem;color:var(--lt);text-transform:uppercase;letter-spacing:.1em}
+
+/* ══ SECTIONS ══ */
+section{padding:5.5rem 2rem}
+.w{max-width:1040px;margin:0 auto}
+.lab{font-family:var(--fh);font-size:.62rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--bl);margin-bottom:.5rem}
+.ttl{font-family:var(--fd);font-size:clamp(1.7rem,3.5vw,2.6rem);font-weight:700;color:var(--dk);line-height:1.1;margin-bottom:.7rem}
+.dsc{font-family:var(--fb);font-size:.92rem;color:var(--md);max-width:460px;line-height:1.7}
+.ctr{text-align:center}
+.ctr .dsc{margin:0 auto}
+
+/* ══ FEATURES ══ */
+.fg{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2.8rem}
+.fc{padding:1.4rem;border:1px solid var(--ln);border-radius:12px;transition:all .25s}
+.fc:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.04)}
+.fi{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:9px;margin-bottom:.9rem}
+.fi.a{background:var(--bl-bg)}
+.fi.b{background:var(--gn-bg)}
+.fi svg{width:18px;height:18px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fi.a svg{stroke:var(--bl)}
+.fi.b svg{stroke:var(--gn)}
+.fc h3{font-family:var(--fh);font-size:.88rem;font-weight:600;color:var(--dk);margin-bottom:.25rem}
+.fc p{font-family:var(--fb);font-size:.82rem;color:var(--md);line-height:1.6}
+
+/* ══ PHOTO BREAK ══ */
+.pb{position:relative;z-index:1;height:440px;overflow:hidden}
+.pb img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+.pb::before{content:'';position:absolute;top:0;left:0;right:0;height:80px;background:linear-gradient(to bottom,var(--bg),transparent);z-index:1}
+.pb::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;z-index:1}
+.pb.to-dk::after{background:linear-gradient(to bottom,transparent,var(--dk))}
+.pb.to-tn::after{background:linear-gradient(to bottom,transparent,var(--bg))}
+
+/* ══ MAP ══ */
+.ms{background:var(--dk);padding:5.5rem 2rem}
+.ms .lab{color:var(--bl)}
+.ms .ttl{color:#fff}
+.ms .dsc{color:rgba(255,255,255,.45)}
+.mb{position:relative;background:#2C2820;border:1px solid rgba(255,255,255,.07);border-radius:13px;overflow:hidden;aspect-ratio:16/9;max-height:480px;margin-top:2.2rem}
+.mt{display:flex;align-items:center;justify-content:space-between;padding:.5rem .9rem;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05)}
+.mt .sr{display:flex;align-items:center;gap:.35rem;padding:.28rem .7rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:6px;font-family:var(--fh);font-size:.68rem;color:rgba(255,255,255,.3);min-width:200px}
+.mt .sr svg{width:11px;height:11px;stroke:rgba(255,255,255,.3);fill:none;stroke-width:2}
+.mt .fl{display:flex;gap:.25rem}
+.mt .ff{padding:.18rem .5rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:4px;font-family:var(--fh);font-size:.56rem;font-weight:500;color:rgba(255,255,255,.3);cursor:pointer}
+.mt .ff.on{background:rgba(46,155,204,.1);border-color:rgba(46,155,204,.22);color:var(--bl)}
+.ma{position:relative;width:100%;height:calc(100% - 34px);overflow:hidden}
+
+.wb{position:absolute;background:rgba(46,155,204,.1);border:1px solid rgba(46,155,204,.16);border-radius:40%}
+.w1{width:160px;height:68px;top:23%;left:13%;border-radius:60% 40% 50% 45%;transform:rotate(-8deg)}
+.w2{width:100px;height:170px;top:32%;left:52%;border-radius:45% 55% 40% 60%;transform:rotate(12deg)}
+.w3{width:220px;height:48px;top:62%;left:26%;border-radius:50%;transform:rotate(-3deg)}
+.w4{width:65px;height:115px;top:8%;left:72%;border-radius:50% 50% 45% 55%;transform:rotate(-15deg)}
+
+.pn{position:absolute;z-index:10;cursor:pointer;transition:transform .2s}
+.pn:hover{transform:scale(1.15) translateY(-2px)}
+.pn i{display:block;width:13px;height:13px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.pn.x i{background:var(--bl)}.pn.y i{background:rgba(46,155,204,.45)}.pn.z i{background:rgba(255,255,255,.18)}
+.q1{top:24%;left:17%}.q2{top:36%;left:54%}.q3{top:63%;left:34%}.q4{top:11%;left:74%}.q5{top:46%;left:31%}.q6{top:50%;left:66%}.q7{top:26%;left:41%}.q8{top:70%;left:56%}.q9{top:16%;left:36%}
+
+.lg{position:absolute;top:.55rem;right:.55rem;background:rgba(28,28,28,.75);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:.45rem .65rem;z-index:20}
+.lg p{font-family:var(--fh);font-size:.48rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:.2rem}
+.lg div{display:flex;align-items:center;gap:.25rem;margin-bottom:.12rem;font-family:var(--fh);font-size:.56rem;color:rgba(255,255,255,.45)}
+.lg div:last-child{margin-bottom:0}
+.lg i{display:inline-block;width:6px;height:6px;border-radius:50%}
+
+.dc{position:absolute;bottom:.7rem;left:.7rem;width:260px;background:rgba(28,28,28,.82);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:.9rem;z-index:20}
+.dc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.55rem}
+.dc-h h4{font-family:var(--fd);font-weight:600;font-size:.84rem;color:#fff;line-height:1.2}
+.dc-h small{font-family:var(--fh);font-size:.56rem;color:rgba(255,255,255,.3);display:block;margin-top:.05rem}
+.dc-h .tg{padding:.14rem .35rem;background:rgba(45,107,63,.12);border:1px solid rgba(45,107,63,.2);border-radius:4px;font-family:var(--fh);font-size:.48rem;font-weight:600;color:#5BA876;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.dc-r{display:grid;grid-template-columns:repeat(3,1fr);gap:.35rem;padding:.55rem 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:.55rem}
+.dc-r label{font-family:var(--fh);font-size:.45rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);display:block;margin-bottom:.04rem}
+.dc-r strong{font-family:var(--fh);font-size:.76rem;font-weight:600;color:var(--bl)}
+.dc-s{display:flex;align-items:center;gap:.4rem}
+.dc-s i{width:6px;height:6px;background:#5BA876;border-radius:50%;flex-shrink:0}
+.dc-s span{font-family:var(--fh);font-size:.7rem;font-weight:500;color:#fff}
+.dc-s small{font-family:var(--fh);font-size:.56rem;color:rgba(255,255,255,.3);display:block;margin-top:.02rem}
+
+/* ══ HOW ══ */
+.hg{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.8rem;position:relative}
+.hg::before{content:'';position:absolute;top:26px;left:15%;right:15%;height:1px;background:var(--ln)}
+.hs{text-align:center}
+.hs em{display:flex;align-items:center;justify-content:center;width:52px;height:52px;background:var(--bg);border:2px solid var(--bl);border-radius:50%;font-family:var(--fd);font-size:1.1rem;font-weight:700;font-style:normal;color:var(--bl);margin:0 auto 1rem;position:relative;z-index:2}
+.hs h3{font-family:var(--fh);font-size:.88rem;font-weight:600;color:var(--dk);margin-bottom:.3rem}
+.hs p{font-family:var(--fb);font-size:.82rem;color:var(--md);line-height:1.6}
+
+/* ══ PRICING ══ */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-top:2.8rem;align-items:start}
+.pc{padding:1.8rem 1.4rem;border:1px solid var(--ln);border-radius:13px;text-align:center;transition:all .3s}
+.pc.pop{border-color:var(--bl);border-width:2px;box-shadow:0 6px 28px rgba(46,155,204,.08);transform:scale(1.02);position:relative}
+.pc.pop::before{content:'MOST POPULAR';position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:.18rem .7rem;background:var(--bl);color:#fff;font-family:var(--fh);font-size:.5rem;font-weight:700;letter-spacing:.1em;border-radius:4px}
+.pc .tn{font-family:var(--fh);font-size:.62rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--lt);margin-bottom:.55rem}
+.pc.pop .tn{color:var(--bl)}
+.pc .pr{font-family:var(--fd);font-size:2.2rem;font-weight:700;color:var(--dk);line-height:1;margin-bottom:.12rem}
+.pc .pr span{font-family:var(--fh);font-size:.78rem;color:var(--lt);font-weight:400}
+.pc .ps{font-family:var(--fh);font-size:.68rem;color:var(--lt);margin-bottom:1.4rem}
+.pc ul{list-style:none;text-align:left;margin-bottom:1.4rem}
+.pc li{display:flex;align-items:flex-start;gap:.4rem;padding:.32rem 0;font-family:var(--fh);font-size:.78rem;color:var(--md);border-bottom:1px solid var(--ln)}
+.pc li:last-child{border-bottom:none}
+.pc li b{color:var(--bl);font-weight:700;flex-shrink:0}
+.pc .ct{display:block;width:100%;padding:.65rem;border:1.5px solid var(--ln);background:transparent;color:var(--dk);font-family:var(--fh);font-weight:600;font-size:.8rem;border-radius:8px;cursor:pointer;transition:all .2s;text-decoration:none;text-align:center}
+.pc .ct:hover{border-color:var(--md)}
+.pc.pop .ct{background:var(--bl);color:#fff;border-color:var(--bl)}
+.pc.pop .ct:hover{background:var(--bl-h);box-shadow:0 4px 14px rgba(46,155,204,.25)}
+
+/* ══ BRAND ══ */
+.brand{max-width:1040px;margin:0 auto}
+.bs{margin-bottom:3rem}
+.bs-t{font-family:var(--fh);font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--lt);margin-bottom:1rem;padding-bottom:.55rem;border-bottom:1px solid var(--ln)}
+.cg{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem}
+.sw{border-radius:9px;overflow:hidden;border:1px solid var(--ln)}
+.sw .s{height:60px}
+.sw .si{padding:.5rem .6rem}
+.sw .si strong{font-family:var(--fh);font-size:.7rem;font-weight:600;color:var(--dk);display:block}
+.sw .si span{font-family:var(--fh);font-size:.62rem;color:var(--lt)}
+.tg2{display:grid;gap:.9rem}
+.ts{padding:1.3rem;border:1px solid var(--ln);border-radius:12px}
+.ts header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem;padding-bottom:.5rem;border-bottom:1px solid var(--ln)}
+.ts header strong{font-family:var(--fh);font-size:.62rem;font-weight:600;color:var(--bl);text-transform:uppercase;letter-spacing:.08em}
+.ts header span{font-family:var(--fh);font-size:.58rem;color:var(--lt)}
+.td{font-family:var(--fd);font-size:2.4rem;font-weight:700;color:var(--dk)}
+.th{font-family:var(--fh);font-size:1.1rem;font-weight:600;color:var(--dk);line-height:1.35}
+.tb{font-family:var(--fb);font-size:.88rem;color:var(--md);line-height:1.7;max-width:520px}
+.lg2{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}
+.lv{padding:1.8rem;border:1px solid var(--ln);border-radius:12px;display:flex;align-items:center;justify-content:center;min-height:110px;position:relative}
+.lv span{position:absolute;bottom:.4rem;right:.55rem;font-family:var(--fh);font-size:.5rem;text-transform:uppercase;letter-spacing:.07em;color:var(--lt)}
+.lv.d{background:var(--dk)}.lv.d span{color:rgba(255,255,255,.3)}
+.lv.t{background:var(--bg)}
+.lv.u{background:var(--bl)}.lv.u span{color:rgba(255,255,255,.45)}
+.lv.wt{background:#fff}
+.lv svg{height:28px}
+.vg{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem}
+.vc{padding:1.1rem;border:1px solid var(--ln);border-radius:12px}
+.vc label{font-family:var(--fh);font-size:.52rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--bl);display:block;margin-bottom:.4rem}
+.vc q{font-family:var(--fb);font-size:.84rem;color:var(--dk);line-height:1.55;display:block;quotes:none}
+.vc small{font-family:var(--fh);font-size:.62rem;color:var(--lt);display:block;margin-top:.4rem}
+
+/* ══ FOOTER ══ */
+footer{background:var(--dk);padding:2.2rem 2rem;text-align:center}
+footer .fl{display:flex;align-items:center;justify-content:center;gap:.4rem;margin-bottom:.4rem}
+footer .fl svg{width:18px;height:18px}
+footer .fl span{font-family:var(--fh);font-size:.78rem;font-weight:700;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase}
+footer p{font-family:var(--fh);font-size:.68rem;color:rgba(255,255,255,.18)}
+
+/* ══ ANIM ══ */
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bk{0%,100%{opacity:1}50%{opacity:.3}}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* ══ RWD ══ */
+@media(max-width:768px){
+  nav{padding:0 1.2rem;height:54px}
+  .nr{display:none}
+  .stats{grid-template-columns:repeat(2,1fr);margin:-1.5rem 1rem 0}
+  .st:nth-child(2){border-right:none}
+  .fg,.hg,.pg{grid-template-columns:1fr}
+  .hg::before{display:none}
+  .pg{max-width:340px;margin:2.8rem auto 0}
+  .pc.pop{transform:none}
+  .dc{width:210px;padding:.75rem}
+  .mt .fl{display:none}
+  .lg2{grid-template-columns:repeat(2,1fr)}
+  .vg,.cg{grid-template-columns:1fr}
+  .pb{height:220px}
+  section,.ms{padding:4rem 1.5rem}
+}
+</style>
+</head>
+<body>
+<div class="topo"></div>
+
+<nav id="nav">
+  <a href="#" class="nl">
+    <svg viewBox="0 0 46 50" fill="none"><path d="M34 25C34 25 27 14 18 14C10 14 5 18.5 5 25C5 31.5 10 36 18 36C27 36 34 25 34 25Z" fill="#2E9BCC"/><circle cx="12.5" cy="23.5" r="2" fill="#3D3528" opacity=".15"/><circle cx="12.5" cy="23.5" r="1.3" fill="#fff"/><circle cx="13" cy="23" r=".5" fill="#3D3528"/><path d="M34 25L42 18L39.5 25L42 32L34 25Z" fill="#2E9BCC"/></svg>
+    <span>FISHON</span>
+  </a>
+  <ul class="nr">
+    <li><a href="#feat">Features</a></li>
+    <li><a href="#map">Map</a></li>
+    <li><a href="#price">Pricing</a></li>
+    <li><a href="#" class="cta">Early Access</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-img"><img src="wading.jpg" alt="Fly fisher wading a river"></div>
+  <div class="h-wrap">
+    <div class="h-tag"><i></i> Live data from all 50 states</div>
+    <h1>All Your Water.<br><b>One App.</b></h1>
+    <p>Every stocking report, river flow, and weather condition in America — live on a map. Stop checking five websites. Start fishing.</p>
+    <div class="h-act">
+      <a href="#" class="b b1">Get Early Access <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#map" class="b b2">See the Map</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats rv">
+  <div class="st"><strong>50</strong><span>States Covered</span></div>
+  <div class="st"><strong>100K+</strong><span>Water Bodies</span></div>
+  <div class="st"><strong>15min</strong><span>Flow Updates</span></div>
+  <div class="st"><strong>Live</strong><span>Stocking Alerts</span></div>
+</div>
+
+<section id="feat" style="padding-top:4.5rem">
+  <div class="w">
+    <div class="ctr rv"><div class="lab">Features</div><div class="ttl">Everything. One Tap.</div><p class="dsc">Tap any water body and see stocking history, real-time conditions, weather, and regulations.</p></div>
+    <div class="fg">
+      <div class="fc rv"><div class="fi a"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><h3>Interactive Map</h3><p>Every fishable water body with terrain, satellite, and topo views. Color-coded pins show what's been stocked.</p></div>
+      <div class="fc rv"><div class="fi b"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Live Conditions</h3><p>USGS river flows, lake levels, and water temps every 15 minutes. Know if flows are rising or dropping.</p></div>
+      <div class="fc rv"><div class="fi a"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><h3>Stocking Alerts</h3><p>Get notified the moment your waters get stocked. Set alerts by water body, species, or region.</p></div>
+      <div class="fc rv"><div class="fi b"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><h3>Stocking History</h3><p>Complete records — species, quantity, date, and source agency. Patterns across months and years.</p></div>
+      <div class="fc rv"><div class="fi a"><svg viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg></div><h3>Weather</h3><p>Current conditions and 5-day forecasts. Wind, pressure, precipitation — the data that matters.</p></div>
+      <div class="fc rv"><div class="fi b"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>All 50 States</h3><p>One app everywhere. Fish Colorado in the morning, cross into Utah in the afternoon. Same data.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="pb to-dk rv"><img src="trout.jpg" alt="Brown trout release"></div>
+
+<section id="map" class="ms">
+  <div class="w">
+    <div class="rv"><div class="lab">The Map</div><div class="ttl">Tap. See Everything.</div><p class="dsc">Every water body is interactive. Tap once for stocking history, live conditions, weather, and regulations.</p></div>
+    <div class="mb rv">
+      <div class="mt">
+        <div class="sr"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Search waters, species, regions...</div>
+        <div class="fl"><div class="ff on">Stocked</div><div class="ff">Flows</div><div class="ff">Weather</div></div>
+      </div>
+      <div class="ma">
+        <div class="wb w1"></div><div class="wb w2"></div><div class="wb w3"></div><div class="wb w4"></div>
+        <div class="pn x q1"><i></i></div><div class="pn x q2"><i></i></div><div class="pn y q3"><i></i></div>
+        <div class="pn x q5"><i></i></div><div class="pn z q4"><i></i></div><div class="pn y q6"><i></i></div>
+        <div class="pn x q7"><i></i></div><div class="pn z q8"><i></i></div><div class="pn y q9"><i></i></div>
+        <div class="lg">
+          <p>Stocking Recency</p>
+          <div><i style="background:#2E9BCC"></i> This week</div>
+          <div><i style="background:rgba(46,155,204,.45)"></i> This month</div>
+          <div><i style="background:rgba(255,255,255,.18)"></i> Older</div>
+        </div>
+        <div class="dc">
+          <div class="dc-h"><div><h4>Strawberry Reservoir</h4><small>Reservoir · Wasatch County, UT</small></div><div class="tg">Stocked 2d ago</div></div>
+          <div class="dc-r"><div><label>Level</label><strong>7,532'</strong></div><div><label>Temp</label><strong>52°F</strong></div><div><label>Wind</label><strong>8 mph</strong></div></div>
+          <div class="dc-s"><i></i><div><span>10,000 Rainbow Trout</span><small>Utah DWR · March 16, 2026</small></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="w">
+    <div class="ctr rv"><div class="lab">How It Works</div><div class="ttl">Open. Check. Go Fish.</div><p class="dsc">AI scrapes hundreds of government sources so you don't have to.</p></div>
+    <div class="hg rv">
+      <div class="hs"><em>1</em><h3>Open the Map</h3><p>See every fishable water near you with color-coded stocking pins and live overlays.</p></div>
+      <div class="hs"><em>2</em><h3>Tap Any Water</h3><p>Instantly see stocking history, flows, water temp, weather, and regulations.</p></div>
+      <div class="hs"><em>3</em><h3>Go Fish</h3><p>Better decisions in seconds. Set alerts so you never miss a stocking event.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="pb to-tn rv"><img src="bass2.jpg" alt="Walleye" style="object-position:center 65%"></div>
+
+<section id="price">
+  <div class="w">
+    <div class="ctr rv"><div class="lab">Pricing</div><div class="ttl">Less Than a Fly Box</div><p class="dsc">Full access to every data point, every state, every alert.</p></div>
+    <div class="pg rv">
+      <div class="pc"><div class="tn">Free</div><div class="pr">$0</div><div class="ps">Forever</div><ul><li><b>✓</b>Interactive map</li><li><b>✓</b>Stocking pins (7 days)</li><li><b>✓</b>Basic water body info</li><li><b>✓</b>1 state</li></ul><a href="#" class="ct">Get Started Free</a></div>
+      <div class="pc pop"><div class="tn">Pro</div><div class="pr">$7.99 <span>/mo</span></div><div class="ps">or $59.99/year (save 37%)</div><ul><li><b>✓</b>Full stocking history</li><li><b>✓</b>Live conditions & flows</li><li><b>✓</b>Push stocking alerts</li><li><b>✓</b>All 50 states</li><li><b>✓</b>Species filters</li><li><b>✓</b>Favorites & weather</li></ul><a href="#" class="ct">Start Free Trial</a></div>
+      <div class="pc"><div class="tn">Guide</div><div class="pr">$19.99 <span>/mo</span></div><div class="ps">Coming soon</div><ul><li><b>✓</b>Everything in Pro</li><li><b>✓</b>API access</li><li><b>✓</b>Client sharing links</li><li><b>✓</b>Historical analytics</li></ul><a href="#" class="ct">Join Waitlist</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="brand">
+  <div class="brand">
+    <div class="ctr rv" style="margin-bottom:2.5rem"><div class="lab">Brand Identity</div><div class="ttl">The Fishon Brand</div><p class="dsc">Water blue, pine green, warm tan, dark brown. Clean and natural.</p></div>
+
+    <div class="bs rv">
+      <div class="bs-t">Color Palette</div>
+      <div class="cg">
+        <div class="sw"><div class="s" style="background:#2E9BCC"></div><div class="si"><strong>Water Blue</strong><span>#2E9BCC</span></div></div>
+        <div class="sw"><div class="s" style="background:#2D6B3F"></div><div class="si"><strong>Pine</strong><span>#2D6B3F</span></div></div>
+        <div class="sw"><div class="s" style="background:#3D3528"></div><div class="si"><strong>Dark Brown</strong><span>#3D3528</span></div></div>
+        <div class="sw"><div class="s" style="background:#EDE8E0"></div><div class="si"><strong>Warm Tan</strong><span>#EDE8E0</span></div></div>
+      </div>
+    </div>
+
+    <div class="bs rv">
+      <div class="bs-t">Typography</div>
+      <div class="tg2">
+        <div class="ts"><header><strong>Display — Playfair Display</strong><span>Headlines, hero</span></header><div class="td">All Your Water. One App.</div></div>
+        <div class="ts"><header><strong>Heading — DM Sans</strong><span>UI, labels, subheads</span></header><div class="th">Strawberry Reservoir was just stocked with 10,000 rainbow trout. Water temp: 52°F.</div></div>
+        <div class="ts"><header><strong>Body — Lora</strong><span>Paragraphs</span></header><div class="tb">Every public fishing data point in America, live, in one place. Fishon aggregates stocking reports from all 50 state wildlife agencies, real-time river flows and lake levels from USGS, and weather conditions from NOAA.</div></div>
+      </div>
+    </div>
+
+    <div class="bs rv">
+      <div class="bs-t">Logo Variations</div>
+      <div class="lg2">
+        <div class="lv d">
+          <svg viewBox="0 0 200 32"><path d="M22 16C22 16 16.5 8 11 8C6 8 3 11.5 3 16C3 20.5 6 24 11 24C16.5 24 22 16 22 16Z" fill="#2E9BCC"/><circle cx="8" cy="15" r="1.2" fill="#fff"/><circle cx="8.3" cy="14.7" r=".45" fill="#3D3528"/><path d="M22 16L27.5 11.5L25.8 16L27.5 20.5L22 16Z" fill="#2E9BCC"/><text x="34" y="20.5" font-family="'DM Sans',sans-serif" font-size="14" font-weight="700" fill="#fff" letter-spacing="2">FISHON</text></svg>
+          <span>Dark</span>
+        </div>
+        <div class="lv t">
+          <svg viewBox="0 0 200 32"><path d="M22 16C22 16 16.5 8 11 8C6 8 3 11.5 3 16C3 20.5 6 24 11 24C16.5 24 22 16 22 16Z" fill="#2E9BCC"/><circle cx="8" cy="15" r="1.2" fill="#3D3528"/><circle cx="8.3" cy="14.7" r=".45" fill="#EDE8E0"/><path d="M22 16L27.5 11.5L25.8 16L27.5 20.5L22 16Z" fill="#2E9BCC"/><text x="34" y="20.5" font-family="'DM Sans',sans-serif" font-size="14" font-weight="700" fill="#3D3528" letter-spacing="2">FISHON</text></svg>
+          <span>Tan</span>
+        </div>
+        <div class="lv wt">
+          <svg viewBox="0 0 200 32"><path d="M22 16C22 16 16.5 8 11 8C6 8 3 11.5 3 16C3 20.5 6 24 11 24C16.5 24 22 16 22 16Z" fill="#2E9BCC"/><circle cx="8" cy="15" r="1.2" fill="#fff"/><circle cx="8.3" cy="14.7" r=".45" fill="#3D3528"/><path d="M22 16L27.5 11.5L25.8 16L27.5 20.5L22 16Z" fill="#2E9BCC"/><text x="34" y="20.5" font-family="'DM Sans',sans-serif" font-size="14" font-weight="700" fill="#3D3528" letter-spacing="2">FISHON</text></svg>
+          <span>White</span>
+        </div>
+        <div class="lv u">
+          <svg viewBox="0 0 36 32"><path d="M22 16C22 16 16.5 8 11 8C6 8 3 11.5 3 16C3 20.5 6 24 11 24C16.5 24 22 16 22 16Z" fill="#fff"/><circle cx="8" cy="15" r="1.2" fill="#2E9BCC"/><circle cx="8.3" cy="14.7" r=".45" fill="#fff"/><path d="M22 16L27.5 11.5L25.8 16L27.5 20.5L22 16Z" fill="#fff"/></svg>
+          <span>Icon</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bs rv">
+      <div class="bs-t">Brand Voice</div>
+      <div class="vg">
+        <div class="vc"><label>Push Notification</label><q>Fish on! Strawberry just got 10,000 rainbows. Water temp: 52°F. Go get 'em.</q><small>Excited but informative. Data first, action last.</small></div>
+        <div class="vc"><label>App Store</label><q>Every stocking report, river flow, and fishing condition in America — live on a map.</q><small>Confident, direct. Problem → solution.</small></div>
+        <div class="vc"><label>Social Post</label><q>10,000 rainbows just dropped in Strawberry. 52°F. Flows: perfect. This is your weekend.</q><small>Short, punchy, data-first.</small></div>
+        <div class="vc"><label>Brand Motto</label><q>All your water. One app.</q><small>The core promise in five words.</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">
+    <svg viewBox="0 0 46 50" fill="none"><path d="M34 25C34 25 27 14 18 14C10 14 5 18.5 5 25C5 31.5 10 36 18 36C27 36 34 25 34 25Z" fill="#2E9BCC" opacity=".35"/><circle cx="12.5" cy="23.5" r="1.3" fill="rgba(255,255,255,.2)"/><path d="M34 25L42 18L39.5 25L42 32L34 25Z" fill="#2E9BCC" opacity=".2"/></svg>
+    <span>FISHON</span>
+  </div>
+  <p>© 2026 Fishon. All your water. One app.</p>
+</footer>
+
+<script>
+const n=document.getElementById('nav');
+window.addEventListener('scroll',()=>n.classList.toggle('scrolled',window.scrollY>40));
+const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')})},{threshold:.06,rootMargin:'0px 0px -25px 0px'});
+document.querySelectorAll('.rv').forEach(el=>o.observe(el));
+</script>
+</body>
+</html>
